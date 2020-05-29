@@ -1,8 +1,8 @@
 ## 作业
 
-### 简答题
+## 简答题
 
-- **描述引用计数的工作原理和优缺点**
+### 描述引用计数的工作原理和优缺点
 
 工作原理：
 
@@ -23,7 +23,7 @@
 
 <br />
 
-- **描述标记整理算法的工作原理**
+### 描述标记整理算法的工作原理
 
 工作原理：
 
@@ -33,7 +33,7 @@
 
 <br />
 
-- **描述V8中新生代存储区垃圾回收的流程**
+### 描述V8中新生代存储区垃圾回收的流程
 
 答：
 
@@ -46,7 +46,7 @@
 
 <br />
 
-- **描述增量标记算法在何时使用，及工作原理**
+### 描述增量标记算法在何时使用，及工作原理
 
 使用：
 
@@ -56,7 +56,7 @@
 
 工作原理：将标记的过程拆分成很多部分，每次只标记一小部分，然后恢复业务代码的执行，再标记，循环交替执行标记。这样原来应用程序卡顿的整个时间就会变分拆成多个细小的时间片，会极大的提高应用程序的响应度。<br />
 
-### 代码题1
+## 代码题1
 基于以下代码完成下面的四个练习
 ```javascript
 const fp = require('lodash/fp')
@@ -71,7 +71,7 @@ const cars = [
 	{ name: ' Pagani Huayra', horsepower: 700, dollar_value: 1300000, in_stock: false }
 ]
 ```
-**<br />**练习1：**使用函数组合 fp.flowRight() 重新实现下面这个函数
+**练习1：** 使用函数组合 fp.flowRight() 重新实现下面这个函数
 ```javascript
 let isLastInStock = function(cars) {
 	// 获取最后一条数据
@@ -89,7 +89,7 @@ const n1 = f(cars)
 console.log(n1)
 // false
 ```
-**<br />**练习2：**使用 fp.flowRight()，fp.prop() 和 fp.first() 获取第一个 car 的 name
+**练习2：** 使用 fp.flowRight()，fp.prop() 和 fp.first() 获取第一个 car 的 name
 ```javascript
 const isFirst = (arr) => fp.first(arr)
 const getKey = (obj) => fp.prop('name', obj)
@@ -101,7 +101,7 @@ console.log(n2)
 ```
 
 
-**练习3：**使用帮助函数 _average 重构 averageDollarValue，使用函数组合的方式实现
+**练习3：** 使用帮助函数 _average 重构 averageDollarValue，使用函数组合的方式实现
 ```javascript
 let _average = function(xs) {
 	return fp.reduce(fp.add, 0, xs) / xs.length
@@ -122,7 +122,7 @@ let n3 = averageDollarValue(cars)
 console.log(n3)
 // 790700
 ```
-**练习4：**使用 flowRight 写一个 sanitizeNames() 函数，返回一个下划线链接的小写字符串，把数组中的 name 转换为这种形式：例如：sanitizeNames(["Hello World"])=>["hello_world"]
+**练习4：** 使用 flowRight 写一个 sanitizeNames() 函数，返回一个下划线链接的小写字符串，把数组中的 name 转换为这种形式：例如：sanitizeNames(["Hello World"])=>["hello_world"]
 ```javascript
 let _underscore = fp.replace(/\W+/g, '_')
 // <-无须改动，并在sanitizeNames中使用它
@@ -145,7 +145,7 @@ console.log(n4)
 // ]
 ```
 
-### 代码题2
+## 代码题2
 基于下面提供的代码，完成后续的四个练习
 ```javascript
 // support.js
@@ -181,7 +181,7 @@ module.exports = {
 	Container
 }
 ```
-**<br />**练习1：**使用 fp.add(x,y) 和 fp.map(f,x) 创建一个能让 functor 里的值增加的函数 ex1
+**练习1：** 使用 fp.add(x,y) 和 fp.map(f,x) 创建一个能让 functor 里的值增加的函数 ex1
 ```javascript
 const fp = require('lodash/fp')
 const { Maybe, Container } = require('./support')
@@ -194,7 +194,7 @@ let ex1 = maybe.map((arrs) => fp.map((i) => fp.add(i, 1), arrs))
 console.log(ex1)
 // Maybe { _value: [ 6, 7, 2 ] }
 ```
-**练习2：**实现一个函数 ex2，能够使用 fp.first 获取列表的第一个元素
+**练习2：** 实现一个函数 ex2，能够使用 fp.first 获取列表的第一个元素
 ```javascript
 const fp = require('lodash/fp')
 const { Maybe, Container } = require('./support')
@@ -207,7 +207,7 @@ let ex2 = xs.map((i) => fp.first(i))
 console.log(ex2)
 // Container { _value: 'do' }
 ```
-**练习3：**实现一个函数 ex3，使用 safeProp 和 fp.first 找到 user 的名字的首字母
+**练习3：** 实现一个函数 ex3，使用 safeProp 和 fp.first 找到 user 的名字的首字母
 ```javascript
 const fp = require('lodash/fp')
 const { Maybe, Container } = require('./support')
@@ -224,7 +224,7 @@ let ex3 = safeProp('name', user).map((x) => fp.first(x))
 console.log(ex3)
 // Maybe { _value: 'A' }
 ```
-**练习4：**使用 Maybe 重写 ex4，不要有 if 语句
+**练习4：** 使用 Maybe 重写 ex4，不要有 if 语句
 ```javascript
 const fp = require('lodash/fp')
 const { Maybe, Container } = require('./support')
