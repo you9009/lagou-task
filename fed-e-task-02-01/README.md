@@ -35,6 +35,7 @@
 ### 3、使用Grunt完成项目的自动化构建
 具体代码请看code-03文件夹<br />
 
-> 2-3 题基础代码下载地址：[https://github.com/lagoufed/fed-e-code/tree/master/part-02/module-01](https://github.com/lagoufed/fed-e-code/tree/master/part-02/module-01)/作业案例基础代码.zip?raw=true
+**2-3 题基础代码下载地址:**<br />
+https://github.com/lagoufed/fed-e-code/tree/master/part-02/module-01/作业案例基础代码.zip?raw=true
 
 **说明:**<br />本次作业的中的编程题要求大家完成相应代码过后，录制一一个小视频简单介绍一下实现思路，演示一下相应功能。最终将录制的视频和代码统一提交至作业仓库。
