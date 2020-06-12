@@ -53,11 +53,9 @@ module.exports = function(grunt) {
 				esversion: 6,
 				globals: {
 					jQuery: true,
-					console: true,
-					module: true
 				}
 			},
-			build: [ 'src/**/*.js' ]
+			build: [ 'src/**/**/*.js' ]
 		},
 		babel: {
 			options: {
@@ -96,6 +94,7 @@ module.exports = function(grunt) {
 		sass: {
 			build: {
 				options: {
+					sourceMap: false,
 					style: 'compressed'
 				},
 				files: [
@@ -151,8 +150,14 @@ module.exports = function(grunt) {
 		htmlmin: {
 			build: {
 				options: {
+					collapseWhitespace: true,
+					minifyCSS: true,
+					minifyJS: true,
+					processConditionalComments: true,
 					removeComments: true,
-					collapseWhitespace: true
+					removeEmptyAttributes: true,
+					removeScriptTypeAttributes: true,
+					removeStyleLinkTypeAttributes: true
 				},
 				files: [
 					{

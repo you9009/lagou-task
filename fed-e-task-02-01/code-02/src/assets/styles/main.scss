@@ -5,61 +5,78 @@
 
 @import 'icons';
 
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+body
+{
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
-.jumbotron {
-  margin-bottom: 0;
-  padding-top: $jumbotron-padding;
-  padding-bottom: $jumbotron-padding;
-  background-color: $jumbotron-bg;
-
-  @media (min-width: 768px) {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
-  }
-
-  .jumbotron-heading {
-    font-weight: 300;
-  }
-
-  .container {
-    max-width: 40rem;
-  }
-
-  p:last-child {
+.jumbotron
+{
     margin-bottom: 0;
-  }
+    padding-top: $jumbotron-padding;
+    padding-bottom: $jumbotron-padding;
+
+    background-color: $jumbotron-bg;
+
+    @media (min-width: 768px)
+    {
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+    }
+
+    .jumbotron-heading
+    {
+        font-weight: 300;
+    }
+
+    .container
+    {
+        max-width: 40rem;
+    }
+
+    p:last-child
+    {
+        margin-bottom: 0;
+    }
 }
 
-.site-footer {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-  font-family: monospace;
+.site-footer
+{
+    font-family: monospace;
 
-  a {
-    text-decoration: none;
-  }
+    padding-top: 3rem;
+    padding-bottom: 3rem;
 
-  @keyframes beat {
-    from,
-    to {
-      transform: none;
+    a
+    {
+        text-decoration: none;
     }
 
-    50% {
-      transform: scale3d(1.4, 1.4, 1.4);
-    }
-  }
+    @keyframes beat
+    {
+        from,
+        to
+        {
+            transform: none;
+        }
 
-  .heart {
-    display: inline-block;
-    color: #f20;
-    font-weight: normal;
-    font-style: normal;
-    animation: beat 0.4s ease-in-out infinite;
-  }
+        50%
+        {
+            transform: scale3d(1.4, 1.4, 1.4);
+        }
+    }
+
+    .heart
+    {
+        font-weight: normal;
+        font-style: normal;
+
+        display: inline-block;
+
+        animation: beat .4s ease-in-out infinite;
+
+        color: #f20;
+    }
 }

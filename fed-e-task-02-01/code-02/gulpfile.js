@@ -76,7 +76,7 @@ const cleanTemp = () => {
 }
 
 const lint = (done) => {
-	const comb = new Comb(require('./.csscomb.json'))
+	const comb = new Comb('csscomb')
 	comb.processPath(config.src)
 	const cwd = path.join(__dirname, config.src)
 	standard.lintFiles(config.paths.scripts, { cwd, fix: true }, done)
@@ -86,7 +86,7 @@ const style = () => {
 	return gulp
 		.src(config.paths.styles, { cwd: config.src, base: config.src, sourcemaps: !isProd })
 		.pipe(Plugins.plumber({ errorHandler: Plugins.sass.logError }))
-		.pipe(Plugins.sass.sync({ outputStyle: 'expanded', precision: 10, includePaths: [ '.' ] }))
+		.pipe(Plugins.sass.sync({ outputStyle: 'compressed', precision: 10, includePaths: [ '.' ] }))
 		.pipe(Plugins.postcss([ autoprefixer() ]))
 		.pipe(gulp.dest(config.temp, { sourcemaps: '.' }))
 		.pipe(bs.reload({ stream: true }))
