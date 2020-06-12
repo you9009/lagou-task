@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 module.exports = (name) => {
-	const delName = 'src/' + name + '.vue'
+	const delName = 'dist/' + name + '.vue'
 	if (fs.existsSync(delName)) {
 		fs.unlink(delName, (err) => {
 			if (err) throw err
