@@ -71,6 +71,10 @@ const clean = () => {
 	return del([ config.temp, config.dest ])
 }
 
+const cleanTemp = () => {
+	return del([ config.temp ])
+}
+
 const lint = (done) => {
 	const comb = new Comb(require('./.csscomb.json'))
 	comb.processPath(config.src)
@@ -162,16 +166,12 @@ const measure = () => {
 }
 
 const upload = () => {
-	return gulp
-		.src('**', { cwd: config.dest })
-		.pipe(Plugins.babel({ presets: [ '@babel/preset-env' ] }))
-		.pipe(Plugins.plumber())
-		.pipe(
-			Plugins.ghPages({
-				cacheDir: `${config.temp}/publish`,
-				branch: argv.branch === undefined ? 'gh-pages' : argv.branch
-			})
-		)
+	return gulp.src('**', { cwd: config.dest }).pipe(Plugins.plumber()).pipe(
+		Plugins.ghPages({
+			cacheDir: `${config.temp}/publish`,
+			branch: argv.branch === undefined ? 'gh-pages' : argv.branch
+		})
+	)
 }
 
 const devServer = () => {
@@ -208,8 +208,10 @@ const serve = gulp.series(compile, devServer)
 
 const build = gulp.series(clean, gulp.parallel(gulp.series(compile, useref), image, font, extra), measure)
 
+const builddist = gulp.series(build, cleanTemp)
+
 const start = gulp.series(build, distServer)
 
-const deploy = gulp.series(build, upload)
+const deploy = gulp.series(build, upload, cleanTemp)
 
-module.exports = { clean, lint, compile, serve, build, start, deploy }
+module.exports = { clean, lint, compile, serve, builddist, start, deploy }
