@@ -39,3 +39,7 @@
 https://github.com/lagoufed/fed-e-code/tree/master/part-02/module-01/作业案例基础代码.zip?raw=true
 
 **说明:**<br />本次作业的中的编程题要求大家完成相应代码过后，录制一一个小视频简单介绍一下实现思路，演示一下相应功能。最终将录制的视频和代码统一提交至作业仓库。
+
+作业视频：百度网盘
+链接：https://pan.baidu.com/s/1p6qL2qQyabd7GDKhfrrhNg
+提取码：pav8
