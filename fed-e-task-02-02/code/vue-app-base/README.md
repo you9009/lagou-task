@@ -8,3 +8,38 @@
 serve: 请使用 Webpack Dev Server 实现此任务
 build: 请使用 Webpack 实现此任务
 lint: 请使用 ESLint 实现此任务
+
+webpack
+webpack-cli
+webpack-dev-server
+webpack-merge
+
+eslint
+babel-eslint
+eslint-loader
+eslint-plugin-vue
+@vue/cli-plugin-babel
+
+babel-loader
+@babel/core
+@babel/preset-env
+
+vue-loader
+vue-style-loader
+vue-template-compiler
+
+<!-- stylelint 支持在 Vue 单文件组件的样式部分的代码校验。 -->
+stylelint
+stylelint-webpack-plugin
+
+less-loader
+css-loader
+style-loader
+
+file-loader
+url-loader
+
+html-webpack-plugin
+copy-webpack-plugin
+clean-webpack-plugin
+mini-css-extract-plugin
