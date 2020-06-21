@@ -9,8 +9,9 @@ module.exports = marge(common, {
 		contentBase: path.join(__dirname, 'src'),
 		compress: true,
 		port: '1234',
-		hot: true,
-		open: true
+		hotOnly: true,
+		open: true,
+		stats: 'errors-only'
 	},
 	plugins: []
 })

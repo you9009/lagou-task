@@ -6,6 +6,11 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = marge(common, {
 	mode: 'production',
 	devtool: 'nosources-source-map',
+	optimization: {
+		splitChunks: {
+			chunks: 'all'
+		}
+	},
 	plugins: [
 		new CopyWebpackPlugin({
 			patterns: [ 'public' ]

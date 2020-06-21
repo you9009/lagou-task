@@ -33,7 +33,9 @@ module.exports = {
 					},
 					{
 						loader: 'css-loader',
-						options: { modules: true }
+						options: {
+							importLoaders: 1
+						}
 					}
 				]
 			},
@@ -49,7 +51,9 @@ module.exports = {
 					},
 					{
 						loader: 'css-loader',
-						options: { modules: true }
+						options: {
+							importLoaders: 1
+						}
 					},
 					'less-loader'
 				]
@@ -61,6 +65,7 @@ module.exports = {
 					options: {
 						limit: 10 * 1024,
 						esModule: false,
+						name: '[name].[hash:8].[ext]',
 						outputPath: 'assets/images/'
 					}
 				}
@@ -106,7 +111,7 @@ module.exports = {
 			BASE_URL: JSON.stringify('/')
 		}),
 		new MiniCssExtractPlugin({
-			filename: '[name].[hash:8].css'
+			filename: 'assets/styles/[name].[hash:8].css'
 		}),
 		new StyleLintPlugin({
 			files: [ '**/*.{vue,htm,html,css,sss,less,scss,sass}' ]
