@@ -4,6 +4,8 @@ const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const StyleLintPlugin = require('stylelint-webpack-plugin')
 
 module.exports = {
 	entry: './src/main.js',
@@ -11,45 +13,104 @@ module.exports = {
 		filename: '[name].[hash:8].js',
 		path: path.join(__dirname, 'dist')
 	},
+	resolve: {
+		alias: {
+			vue$: 'vue/dist/vue.esm.js'
+		},
+		extensions: [ '.js', '.jsx', '.json' ]
+	},
 	module: {
 		rules: [
 			{
-				test: /.css$/,
-				use: [ 'vue-style-loader', 'css-loader' ]
+				test: /\.css$/,
+				use: [
+					{
+						loader:
+							process.env.NODE_ENV !== 'production' ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
+						options: {
+							publicPath: 'assets/styles/'
+						}
+					},
+					{
+						loader: 'css-loader',
+						options: { modules: true }
+					}
+				]
 			},
 			{
-				test: /.less$/,
-				use: [ 'vue-style-loader', 'css-loader', 'less-loader' ]
+				test: /\.less$/,
+				use: [
+					{
+						loader:
+							process.env.NODE_ENV !== 'production' ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
+						options: {
+							publicPath: 'assets/styles/'
+						}
+					},
+					{
+						loader: 'css-loader',
+						options: { modules: true }
+					},
+					'less-loader'
+				]
 			},
 			{
-				test: /.(png|jpe?g|gif)$/,
+				test: /\.(png|jpg|gif)$/,
 				use: {
 					loader: 'url-loader',
 					options: {
-						limit: 10 * 1024
+						limit: 10 * 1024,
+						esModule: false,
+						outputPath: 'assets/images/'
 					}
 				}
 			},
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-				use: {
-					loader: 'babel-loader',
-					options: {
-						presets: [ '@babel/preset-env' ]
+				use: [
+					'eslint-loader',
+					{
+						loader: 'babel-loader',
+						options: {
+							presets: [ '@babel/preset-env' ]
+						}
 					}
-				}
+				]
 			},
 			{
-				test: /.vue$/,
-				loader: 'vue-loader'
+				test: /\.vue$/,
+				use: {
+					loader: 'vue-loader',
+					options: {
+						transformAssetUrls: {
+							video: [ 'src', 'poster' ],
+							source: 'src',
+							img: 'src',
+							image: [ 'xlink:href', 'href' ],
+							use: [ 'xlink:href', 'href' ]
+						}
+					}
+				}
 			}
 		]
 	},
 	plugins: [
 		new CleanWebpackPlugin(),
 		new VueLoaderPlugin(),
-		new HtmlWebpackPlugin(),
+		new HtmlWebpackPlugin({
+			title: require('./package.json').name,
+			template: './public/index.html'
+		}),
+		new webpack.DefinePlugin({
+			BASE_URL: JSON.stringify('/')
+		}),
+		new MiniCssExtractPlugin({
+			filename: '[name].[hash:8].css'
+		}),
+		new StyleLintPlugin({
+			files: [ '**/*.{vue,htm,html,css,sss,less,scss,sass}' ]
+		}),
 		new webpack.HotModuleReplacementPlugin()
 	]
 }

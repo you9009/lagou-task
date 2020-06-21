@@ -8,7 +8,7 @@ module.exports = marge(common, {
 	devtool: 'nosources-source-map',
 	plugins: [
 		new CopyWebpackPlugin({
-			patterns: [ 'public', { from: 'src/assets', to: 'assets' } ]
+			patterns: [ 'public' ]
 		})
 	]
 })
