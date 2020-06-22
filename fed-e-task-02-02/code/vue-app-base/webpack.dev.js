@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const path = require('path')
 const common = require('./webpack.common')
 const marge = require('webpack-merge')
@@ -13,5 +14,17 @@ module.exports = marge(common, {
 		open: true,
 		stats: 'errors-only'
 	},
-	plugins: []
+	module: {
+		rules: [
+			{
+				test: /\.css$/,
+				use: [ 'vue-style-loader', 'css-loader', 'postcss-loader' ]
+			},
+			{
+				test: /\.less$/,
+				use: [ 'vue-style-loader', 'css-loader', 'postcss-loader', 'less-loader' ]
+			}
+		]
+	},
+	plugins: [ new webpack.HotModuleReplacementPlugin() ]
 })

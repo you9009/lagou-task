@@ -4,7 +4,6 @@ const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const StyleLintPlugin = require('stylelint-webpack-plugin')
 
 module.exports = {
@@ -21,43 +20,6 @@ module.exports = {
 	},
 	module: {
 		rules: [
-			{
-				test: /\.css$/,
-				use: [
-					{
-						loader:
-							process.env.NODE_ENV !== 'production' ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
-						options: {
-							publicPath: 'assets/styles/'
-						}
-					},
-					{
-						loader: 'css-loader',
-						options: {
-							importLoaders: 1
-						}
-					}
-				]
-			},
-			{
-				test: /\.less$/,
-				use: [
-					{
-						loader:
-							process.env.NODE_ENV !== 'production' ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
-						options: {
-							publicPath: 'assets/styles/'
-						}
-					},
-					{
-						loader: 'css-loader',
-						options: {
-							importLoaders: 1
-						}
-					},
-					'less-loader'
-				]
-			},
 			{
 				test: /\.(png|jpg|gif)$/,
 				use: {
@@ -110,12 +72,13 @@ module.exports = {
 		new webpack.DefinePlugin({
 			BASE_URL: JSON.stringify('/')
 		}),
-		new MiniCssExtractPlugin({
-			filename: 'assets/styles/[name].[hash:8].css'
-		}),
 		new StyleLintPlugin({
 			files: [ '**/*.{vue,htm,html,css,sss,less,scss,sass}' ]
 		}),
-		new webpack.HotModuleReplacementPlugin()
+		new webpack.ProgressPlugin((percentage, message, ...args) => {
+			if (percentage == 1) {
+				console.info(percentage, message, ...args)
+			}
+		})
 	]
 }
