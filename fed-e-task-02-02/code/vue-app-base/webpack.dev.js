@@ -10,21 +10,12 @@ module.exports = marge(common, {
 		contentBase: path.join(__dirname, 'src'),
 		compress: true,
 		port: '1234',
-		hotOnly: true,
+		hot: true,
 		open: true,
 		stats: 'errors-only'
 	},
 	module: {
-		rules: [
-			{
-				test: /\.css$/,
-				use: [ 'vue-style-loader', 'css-loader', 'postcss-loader' ]
-			},
-			{
-				test: /\.less$/,
-				use: [ 'vue-style-loader', 'css-loader', 'postcss-loader', 'less-loader' ]
-			}
-		]
+		rules: []
 	},
 	plugins: [ new webpack.HotModuleReplacementPlugin() ]
 })

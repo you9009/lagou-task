@@ -1,6 +1,7 @@
 const common = require('./webpack.common')
 const marge = require('webpack-merge')
 
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
@@ -31,6 +32,7 @@ module.exports = marge(common, {
 		]
 	},
 	plugins: [
+		new CleanWebpackPlugin(),
 		new CopyWebpackPlugin({
 			patterns: [ 'public' ]
 		}),

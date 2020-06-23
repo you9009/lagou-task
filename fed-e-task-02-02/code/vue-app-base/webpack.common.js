@@ -1,22 +1,15 @@
 const webpack = require('webpack')
 const path = require('path')
 
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const StyleLintPlugin = require('stylelint-webpack-plugin')
 
 module.exports = {
+	mode: 'none',
 	entry: './src/main.js',
 	output: {
 		filename: 'assets/js/[name].[hash:8].js',
 		path: path.join(__dirname, 'dist')
-	},
-	resolve: {
-		alias: {
-			vue$: 'vue/dist/vue.esm.js'
-		},
-		extensions: [ '.js', '.jsx', '.json' ]
 	},
 	module: {
 		rules: [
@@ -46,6 +39,14 @@ module.exports = {
 				]
 			},
 			{
+				test: /\.css$/,
+				use: [ 'vue-style-loader', 'css-loader' ]
+			},
+			{
+				test: /\.less$/,
+				use: [ 'vue-style-loader', 'css-loader', 'less-loader' ]
+			},
+			{
 				test: /\.vue$/,
 				use: {
 					loader: 'vue-loader',
@@ -63,7 +64,6 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new CleanWebpackPlugin(),
 		new VueLoaderPlugin(),
 		new HtmlWebpackPlugin({
 			title: require('./package.json').name,
@@ -71,14 +71,6 @@ module.exports = {
 		}),
 		new webpack.DefinePlugin({
 			BASE_URL: JSON.stringify('/')
-		}),
-		new StyleLintPlugin({
-			files: [ '**/*.{vue,htm,html,css,sss,less,scss,sass}' ]
-		}),
-		new webpack.ProgressPlugin((percentage, message, ...args) => {
-			if (percentage == 1) {
-				console.info(percentage, message, ...args)
-			}
 		})
 	]
 }
