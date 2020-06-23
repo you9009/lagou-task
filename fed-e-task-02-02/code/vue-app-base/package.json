@@ -5,7 +5,7 @@
 	"scripts": {
 		"serve": "webpack-dev-server --config webpack.dev.js ",
 		"build": "webpack --config webpack.prod.js",
-		"lint": "webpack --config webpack.common.js"
+		"lint": "webpack --config webpack.prod.js"
 	},
 	"dependencies": {
 		"core-js": "^3.6.5",

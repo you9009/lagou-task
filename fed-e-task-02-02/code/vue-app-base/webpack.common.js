@@ -5,7 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
-	mode: 'none',
 	entry: './src/main.js',
 	output: {
 		filename: 'assets/js/[name].[hash:8].js',
@@ -14,14 +13,17 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.(png|jpg|gif)$/,
+				test: /\.vue$/,
 				use: {
-					loader: 'url-loader',
+					loader: 'vue-loader',
 					options: {
-						limit: 10 * 1024,
-						esModule: false,
-						name: '[name].[hash:8].[ext]',
-						outputPath: 'assets/img/'
+						transformAssetUrls: {
+							video: [ 'src', 'poster' ],
+							source: 'src',
+							img: 'src',
+							image: [ 'xlink:href', 'href' ],
+							use: [ 'xlink:href', 'href' ]
+						}
 					}
 				}
 			},
@@ -39,25 +41,14 @@ module.exports = {
 				]
 			},
 			{
-				test: /\.css$/,
-				use: [ 'vue-style-loader', 'css-loader' ]
-			},
-			{
-				test: /\.less$/,
-				use: [ 'vue-style-loader', 'css-loader', 'less-loader' ]
-			},
-			{
-				test: /\.vue$/,
+				test: /\.(png|jpg|gif)$/,
 				use: {
-					loader: 'vue-loader',
+					loader: 'url-loader',
 					options: {
-						transformAssetUrls: {
-							video: [ 'src', 'poster' ],
-							source: 'src',
-							img: 'src',
-							image: [ 'xlink:href', 'href' ],
-							use: [ 'xlink:href', 'href' ]
-						}
+						limit: 10 * 1024,
+						esModule: false,
+						name: '[name].[hash:8].[ext]',
+						outputPath: 'assets/img/'
 					}
 				}
 			}

@@ -22,11 +22,7 @@ module.exports = marge(common, {
 	module: {
 		rules: [
 			{
-				test: /\.css$/,
-				use: [ MiniCssExtractPlugin.loader, 'css-loader' ]
-			},
-			{
-				test: /\.less$/,
+				test: /\.(le|c)ss$/,
 				use: [ MiniCssExtractPlugin.loader, 'css-loader', 'less-loader' ]
 			}
 		]

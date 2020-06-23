@@ -15,7 +15,12 @@ module.exports = marge(common, {
 		stats: 'errors-only'
 	},
 	module: {
-		rules: []
+		rules: [
+			{
+				test: /\.(le|c)ss$/,
+				use: [ 'vue-style-loader', 'css-loader', 'less-loader' ]
+			}
+		]
 	},
 	plugins: [ new webpack.HotModuleReplacementPlugin() ]
 })
