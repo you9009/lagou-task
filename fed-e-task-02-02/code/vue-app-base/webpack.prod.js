@@ -13,9 +13,9 @@ module.exports = marge(common, {
 		minimize: true,
 		minimizer: [ new TerserWebpackPlugin(), new OptimizeCssAssetsWebpackPlugin() ],
 		splitChunks: {
-			name: `assets/scripts/vendors`,
+			name: `vendors`,
 			chunks: 'all',
-			automaticNameDelimiter: '.'
+			automaticNameDelimiter: '-'
 		}
 	},
 	module: {
@@ -35,7 +35,7 @@ module.exports = marge(common, {
 			patterns: [ 'public' ]
 		}),
 		new MiniCssExtractPlugin({
-			filename: 'assets/styles/[name].[hash:8].css'
+			filename: 'assets/css/[name].[hash:8].css'
 		})
 	]
 })

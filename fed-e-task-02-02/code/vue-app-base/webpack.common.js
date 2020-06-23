@@ -9,7 +9,7 @@ const StyleLintPlugin = require('stylelint-webpack-plugin')
 module.exports = {
 	entry: './src/main.js',
 	output: {
-		filename: '[name].[hash:8].js',
+		filename: 'assets/js/[name].[hash:8].js',
 		path: path.join(__dirname, 'dist')
 	},
 	resolve: {
@@ -28,7 +28,7 @@ module.exports = {
 						limit: 10 * 1024,
 						esModule: false,
 						name: '[name].[hash:8].[ext]',
-						outputPath: 'assets/images/'
+						outputPath: 'assets/img/'
 					}
 				}
 			},
