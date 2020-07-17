@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const common = require('./webpack.common')
 const marge = require('webpack-merge')
 
@@ -13,20 +14,39 @@ module.exports = marge(common, {
 		minimize: true,
 		minimizer: [ new TerserWebpackPlugin(), new OptimizeCssAssetsWebpackPlugin() ],
 		splitChunks: {
-			name: `assets/scripts/vendors`,
-			chunks: 'all',
-			automaticNameDelimiter: '.'
-		}
+			chunks: 'async',
+			automaticNameDelimiter: '-',
+			cacheGroups: {
+				vendors: {
+					test: /[\\/]node_modules[\\/]/,
+					chunks: 'initial',
+					name: 'vendors'
+				},
+				'async-vendors': {
+					test: /[\\/]node_modules[\\/]/,
+					minChunks: 2,
+					chunks: 'async',
+					name: 'async-vendors'
+				}
+			}
+		},
+		runtimeChunk: { name: 'manifest' }
 	},
 	module: {
 		rules: [
 			{
-				test: /\.css$/,
-				use: [ MiniCssExtractPlugin.loader, 'css-loader' ]
-			},
-			{
-				test: /\.less$/,
-				use: [ MiniCssExtractPlugin.loader, 'css-loader', 'less-loader' ]
+				test: /\.(le|c)ss$/i,
+				use: [
+					{
+						loader: MiniCssExtractPlugin.loader,
+						options: {
+							esModule: true,
+							reloadAll: true
+						}
+					},
+					'css-loader',
+					'less-loader'
+				]
 			}
 		]
 	},
@@ -35,7 +55,8 @@ module.exports = marge(common, {
 			patterns: [ 'public' ]
 		}),
 		new MiniCssExtractPlugin({
-			filename: 'assets/styles/[name].[hash:8].css'
-		})
+			filename: 'css/[name].[hash:8].css'
+		}),
+		new webpack.NoEmitOnErrorsPlugin()
 	]
 })

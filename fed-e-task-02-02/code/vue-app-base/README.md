@@ -28,7 +28,6 @@ vue-loader
 vue-style-loader
 vue-template-compiler
 
-<!-- stylelint 支持在 Vue 单文件组件的样式部分的代码校验。 -->
 stylelint
 stylelint-webpack-plugin
 

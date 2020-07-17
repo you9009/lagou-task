@@ -7,38 +7,40 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const StyleLintPlugin = require('stylelint-webpack-plugin')
 
 module.exports = {
-	entry: './src/main.js',
+	entry: {
+		app: './src/main.js'
+	},
 	output: {
-		filename: '[name].[hash:8].js',
+		filename: '[name].js',
 		path: path.join(__dirname, 'dist')
 	},
 	resolve: {
 		alias: {
 			vue$: 'vue/dist/vue.esm.js'
 		},
-		extensions: [ '.js', '.jsx', '.json' ]
+		extensions: [ '.js', '.vue' ]
 	},
 	module: {
 		rules: [
 			{
-				test: /\.(png|jpg|gif)$/,
+				test: /\.(png|jpg|gif)$/i,
 				use: {
 					loader: 'url-loader',
 					options: {
 						limit: 10 * 1024,
 						esModule: false,
-						name: '[name].[hash:8].[ext]',
-						outputPath: 'assets/images/'
+						name: 'img/[name].[hash:8].[ext]'
 					}
 				}
 			},
 			{
-				test: /\.js$/,
+				test: /\.js$/i,
 				exclude: /node_modules/,
+				include: path.join(__dirname, 'src'),
 				use: [
 					'eslint-loader',
 					{
-						loader: 'babel-loader',
+						loader: 'babel-loader?cacheDirectory',
 						options: {
 							presets: [ '@babel/preset-env' ]
 						}
@@ -63,17 +65,18 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new CleanWebpackPlugin(),
 		new VueLoaderPlugin(),
-		new HtmlWebpackPlugin({
-			title: require('./package.json').name,
-			template: './public/index.html'
-		}),
+		new CleanWebpackPlugin(),
 		new webpack.DefinePlugin({
 			BASE_URL: JSON.stringify('/')
 		}),
+		new HtmlWebpackPlugin({
+			title: require('./package.json').name,
+			template: path.join(__dirname, 'public/index.html'),
+			inject: true
+		}),
 		new StyleLintPlugin({
-			files: [ '**/*.{vue,htm,html,css,sss,less,scss,sass}' ]
+			files: [ 'src/**/*.{vue,htm,html,css,sss,less,scss,sass}' ]
 		}),
 		new webpack.ProgressPlugin((percentage, message, ...args) => {
 			if (percentage == 1) {
