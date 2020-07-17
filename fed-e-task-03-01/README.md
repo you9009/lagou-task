@@ -37,6 +37,6 @@ diff算法的核心是调用patch，patch接收oldVnode和vnode两个参数，�
  
 ### 3、参考 Snabbdom 提供的电影列表的示例，利用Snabbdom 实现类似的效果，如图：
 
-![](https://s0.lgstatic.com/i/image/M00/26/F2/Ciqc1F7zUZ-AWP5NAAN0Z_t_hDY449.png)
+![](https://cdn.nlark.com/yuque/0/2020/png/243369/1594887589159-916887a8-2883-49b8-afe3-ff5fe1ab62a5.png#align=left&display=inline&height=705&margin=%5Bobject%20Object%5D&originHeight=705&originWidth=1278&size=0&status=done&style=none&width=1278)
 
 代码地址：code/snabbdom
