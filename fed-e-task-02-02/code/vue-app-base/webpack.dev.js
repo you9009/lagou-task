@@ -10,14 +10,14 @@ module.exports = marge(common, {
 		contentBase: path.join(__dirname, 'src'),
 		compress: true,
 		port: '1234',
-		hotOnly: true,
+		hot: true,
 		open: true,
 		stats: 'errors-only'
 	},
 	module: {
 		rules: [
 			{
-				test: /\.(le|c)ss$/i,
+				test: /\.(le|c)ss$/,
 				use: [ 'vue-style-loader', 'css-loader', 'less-loader' ]
 			}
 		]

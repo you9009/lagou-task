@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const common = require('./webpack.common')
 const marge = require('webpack-merge')
 
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
@@ -14,49 +15,26 @@ module.exports = marge(common, {
 		minimize: true,
 		minimizer: [ new TerserWebpackPlugin(), new OptimizeCssAssetsWebpackPlugin() ],
 		splitChunks: {
-			chunks: 'async',
-			automaticNameDelimiter: '-',
-			cacheGroups: {
-				vendors: {
-					test: /[\\/]node_modules[\\/]/,
-					chunks: 'initial',
-					name: 'vendors'
-				},
-				'async-vendors': {
-					test: /[\\/]node_modules[\\/]/,
-					minChunks: 2,
-					chunks: 'async',
-					name: 'async-vendors'
-				}
-			}
-		},
-		runtimeChunk: { name: 'manifest' }
+			name: `vendors`,
+			chunks: 'all',
+			automaticNameDelimiter: '-'
+		}
 	},
 	module: {
 		rules: [
 			{
-				test: /\.(le|c)ss$/i,
-				use: [
-					{
-						loader: MiniCssExtractPlugin.loader,
-						options: {
-							esModule: true,
-							reloadAll: true
-						}
-					},
-					'css-loader',
-					'less-loader'
-				]
+				test: /\.(le|c)ss$/,
+				use: [ MiniCssExtractPlugin.loader, 'css-loader', 'less-loader' ]
 			}
 		]
 	},
 	plugins: [
+		new CleanWebpackPlugin(),
 		new CopyWebpackPlugin({
 			patterns: [ 'public' ]
 		}),
 		new MiniCssExtractPlugin({
-			filename: 'css/[name].[hash:8].css'
-		}),
-		new webpack.NoEmitOnErrorsPlugin()
+			filename: 'assets/css/[name].[hash:8].css'
+		})
 	]
 })
