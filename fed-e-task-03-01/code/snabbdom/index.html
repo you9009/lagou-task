@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>snabbdom-dom</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: #fafafa;
+  }
+
+  .wrap {
+    padding: 20px;
+    width: 1024px;
+    margin: 0 auto;
+  }
+
+  .sort-title {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .btn {
+    cursor: pointer;
+    background: #fff;
+    box-shadow: 0 0 1px rgba(0, 0, 0, .2);
+    padding: 5px 10px;
+    transition: box-shadow .05s ease-in-out;
+    -webkit-transition: box-shadow .05s ease-in-out;
+  }
+
+  .row-list {
+    position: relative;
+  }
+
+  .row {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    background: #fff;
+    box-shadow: 0 0 1px rgba(0, 0, 0, .2);
+    transition: transform .5s ease-in-out, opacity .5s ease-out, left .5s ease-in-out;
+    -webkit-transition: transform .5s ease-in-out, opacity .5s ease-out, left .5s ease-in-out;
+  }
+
+  .row div {
+    margin-right: 10px;
+  }
+
+  .row>div:nth-child(1) {
+    font-weight: bold;
+    width: 4%;
+  }
+
+  .row>div:nth-child(2) {
+    width: 30%;
+  }
+
+  .row>div:nth-child(3) {
+    width: 65%;
+  }
+
+  .active {
+    cursor: pointer;
+    color: #C25151;
+  }
+
+  .rm-btn {
+    background-color: #C25151;
+    color: #fff;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 1;
+    padding: 0;
+  }
+</style>
+
+<body>
+  <div id="app"></div>
+  <script src="./src/task.ts"></script>
+</body>
+
+</html>
