@@ -36,5 +36,6 @@ diff算法的核心是调用patch，patch接收oldVnode和vnode两个参数，�
 代码地址：code/nimi-router
  
 ### 3、参考 Snabbdom 提供的电影列表的示例，利用Snabbdom 实现类似的效果，如图：
+<br />
 ![](https://s0.lgstatic.com/i/image/M00/26/F2/Ciqc1F7zUZ-AWP5NAAN0Z_t_hDY449.png)<br />
 代码地址：code/snabbdom
