@@ -58,7 +58,7 @@
 
 <script>
 import { mapState } from 'vuex'
-// import { PutUser } from '@/utils/api'
+import { setUsers } from '@/utils/api'
 export default {
   name: 'SettingsIndex',
   middleware: 'authenticated',
@@ -73,19 +73,19 @@ export default {
   },
   methods: {
     async onSubmit() {
-      // try {
-      //   let key = {
-      //     email: this.getUse.email,
-      //     username: this.getUse.username,
-      //     password: this.getUse.password,
-      //     image: this.getUse.image,
-      //     bio: this.getUse.bio,
-      //   }
-      //   const { data } = await PutUser({ user: key })
-      //   console.log(data)
-      // } catch (error) {
-      //   console.log(error)
-      // }
+      try {
+        let key = {
+          email: this.getUse.email,
+          username: this.getUse.username,
+          password: this.getUse.password,
+          image: this.getUse.image,
+          bio: this.getUse.bio,
+        }
+        const { data } = await setUsers({ user: key })
+        console.log(data)
+      } catch (error) {
+        console.log(error)
+      }
     },
   },
 }

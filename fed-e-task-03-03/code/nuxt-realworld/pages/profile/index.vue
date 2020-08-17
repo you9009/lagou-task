@@ -4,13 +4,17 @@
       <div class="container">
         <div class="row">
           <div class="col-xs-12 col-md-10 offset-md-1">
-            <img src="http://i.imgur.com/Qr71crq.jpg" class="user-img" />
-            <h4>Eric Simons</h4>
-            <p>Cofounder @GoThinkster, lived in Aol's HQ for a few months, kinda looks like Peeta from the Hunger Games</p>
-            <button class="btn btn-sm btn-outline-secondary action-btn">
+            <img :src="profile.image" class="user-img" />
+            <h4>{{profile.username}}</h4>
+            <p>{{profile.bio}}</p>
+            <button
+              class="btn btn-sm btn-outline-secondary action-btn"
+              :class="{'active':profile.following}"
+              @click="typeFollow(profile.following)"
+            >
               <i class="ion-plus-round"></i>
               &nbsp;
-              Follow Eric Simons
+              Follow {{profile.username}}
             </button>
           </div>
         </div>
@@ -81,8 +85,24 @@
 </template>
 
 <script>
+import { getProfiles, setFollow, deleteFollow } from '@/utils/api'
 export default {
   name: 'profile',
+  async asyncData({ params }) {
+    const { data } = await getProfiles(params.username)
+    return {
+      profile: data.profile,
+    }
+  },
+  methods: {
+    typeFollow(type) {
+      if (type) {
+        deleteFollow(this.profile.username)
+        } else {
+        setFollow(this.profile.username)
+      }
+    },
+  },
 }
 </script>
 

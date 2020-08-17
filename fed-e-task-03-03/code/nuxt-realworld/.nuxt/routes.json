@@ -1,0 +1,51 @@
+[
+  {
+    "path": "/",
+    "component": "/Users/you/Desktop/Github/LaGou/lagou-task/fed-e-task-03-03/code/nuxt-realworld/pages/layout",
+    "children": [
+      {
+        "path": "",
+        "name": "HomeIndex",
+        "component": "/Users/you/Desktop/Github/LaGou/lagou-task/fed-e-task-03-03/code/nuxt-realworld/pages/home",
+        "_name": "_24ac8e32"
+      },
+      {
+        "path": "/login",
+        "name": "LoginIndex",
+        "component": "/Users/you/Desktop/Github/LaGou/lagou-task/fed-e-task-03-03/code/nuxt-realworld/pages/login",
+        "_name": "_711d8076"
+      },
+      {
+        "path": "/register",
+        "name": "RegisterIndex",
+        "component": "/Users/you/Desktop/Github/LaGou/lagou-task/fed-e-task-03-03/code/nuxt-realworld/pages/login",
+        "_name": "_711d8076"
+      },
+      {
+        "path": "/profile/:username",
+        "name": "profile",
+        "component": "/Users/you/Desktop/Github/LaGou/lagou-task/fed-e-task-03-03/code/nuxt-realworld/pages/profile",
+        "_name": "_78e60b76"
+      },
+      {
+        "path": "/settings",
+        "name": "SettingsIndex",
+        "component": "/Users/you/Desktop/Github/LaGou/lagou-task/fed-e-task-03-03/code/nuxt-realworld/pages/settings",
+        "_name": "_351b73f6"
+      },
+      {
+        "path": "/editor",
+        "name": "EditArticle",
+        "component": "/Users/you/Desktop/Github/LaGou/lagou-task/fed-e-task-03-03/code/nuxt-realworld/pages/create",
+        "_name": "_b93f9ce2"
+      },
+      {
+        "path": "/article/:slug",
+        "name": "article",
+        "component": "/Users/you/Desktop/Github/LaGou/lagou-task/fed-e-task-03-03/code/nuxt-realworld/pages/article",
+        "_name": "_5fb04ec3"
+      }
+    ],
+    "_name": "_9c54e886"
+  }
+]

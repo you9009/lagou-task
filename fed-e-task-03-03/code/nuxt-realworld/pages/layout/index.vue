@@ -20,7 +20,7 @@
               </nuxt-link>
             </li>
             <li class="nav-item">
-              <nuxt-link class="nav-link" to="/profile/123">
+              <nuxt-link class="nav-link" :to="'/profile/'+user.username">
                 <img v-if="user.image" :src="user.image" alt />{{user.username}}
               </nuxt-link>
             </li>

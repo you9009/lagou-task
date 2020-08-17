@@ -18,6 +18,9 @@
               <li class="nav-item">
                 <a class="nav-link active" href>Global Feed</a>
               </li>
+              <li class="nav-item" v-if="tag">
+                <a class="nav-link active" href>#{{tag}}</a>
+              </li>
             </ul>
           </div>
 
@@ -35,8 +38,7 @@
               </div>
               <button
                 class="btn btn-outline-primary btn-sm pull-xs-right"
-                :class="{active:item.favorited}"
-              >
+                :class="{active:item.favorited}">
                 <i class="ion-heart"></i>
                 {{item.favoritesCount}}
               </button>
@@ -56,7 +58,7 @@
                 v-for="item in totalPage"
                 :key="item.slug"
               >
-                <nuxt-link class="page-link" :to="{name:'HomeIndex',query:{page:item}}">{{item}}</nuxt-link>
+                <nuxt-link class="page-link" :to="{name:'HomeIndex',query:{limit,page:item,tag}}">{{item}}</nuxt-link>
               </li>
             </ul>
           </nav>
@@ -68,7 +70,7 @@
 
             <div class="tag-list">
               <nuxt-link
-                to
+                :to="{name:'HomeIndex',query:{limit,page,tag:item}}"
                 class="tag-pill tag-default"
                 v-for="(item, index) in tags"
                 :key="index"
@@ -82,16 +84,18 @@
 </template>
 
 <script>
-import { getArticles, getTags } from '@/utils/api'
+import { getArticles, getTags,setFollow,deleteFollow } from '@/utils/api'
 export default {
   name: 'HomeIndex',
   async asyncData({ query }) {
+    const tag = query.tag
     const page = Number.parseInt(query.page) || 1
     const limit = 10
-    const { data } = await getArticles({ limit, offset: (page - 1) * limit })
+    const { data } = await getArticles({ limit, offset: (page - 1) * limit ,tag})
 
     const { data: tagData } = await getTags()
     return {
+      tag,
       page,
       limit,
       articles: data.articles,
@@ -104,7 +108,7 @@ export default {
       return Math.ceil(this.articlesCount / this.limit) || 0
     },
   },
-  watchQuery: ['page'],
+  watchQuery: ['page','tag'],
 }
 </script>
 
