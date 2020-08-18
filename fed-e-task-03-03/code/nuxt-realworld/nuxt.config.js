@@ -1,5 +1,6 @@
 module.exports = {
   server: {
+    host: '0.0.0.0',
     port: 3456
   },
   router: {
@@ -16,17 +17,17 @@ module.exports = {
             children: [
               {
                 path: '',
-                name: 'HomeIndex',
+                name: 'home',
                 component: resolve(__dirname, 'pages/home/')
               },
               {
                 path: '/login',
-                name: 'LoginIndex',
+                name: 'login',
                 component: resolve(__dirname, 'pages/login/')
               },
               {
                 path: '/register',
-                name: 'RegisterIndex',
+                name: 'register',
                 component: resolve(__dirname, 'pages/login/')
               },
               {
@@ -36,13 +37,13 @@ module.exports = {
               },
               {
                 path: '/settings',
-                name: 'SettingsIndex',
+                name: 'settings',
                 component: resolve(__dirname, 'pages/settings/')
               },
               {
-                path: '/editor',
-                name: 'EditArticle',
-                component: resolve(__dirname, 'pages/create/')
+                path: '/editor/:slug?',
+                name: 'editor',
+                component: resolve(__dirname, 'pages/editor/')
               },
               {
                 path: '/article/:slug',

@@ -3,7 +3,7 @@
     <!-- 顶部导航栏 -->
     <nav class="navbar navbar-light">
       <div class="container">
-        <nuxt-link class="navbar-brand" to="/">conduit</nuxt-link>
+        <nuxt-link class="navbar-brand" to="/">Nuxt</nuxt-link>
         <ul class="nav navbar-nav pull-xs-right">
           <li class="nav-item">
             <nuxt-link class="nav-link" to="/" exact>Home</nuxt-link>

@@ -9,45 +9,50 @@
             <fieldset>
               <fieldset class="form-group">
                 <input
+                  v-model="currentUser.image"
                   class="form-control"
                   type="text"
                   placeholder="URL of profile picture"
-                  v-model="getUse.image"
                 />
               </fieldset>
               <fieldset class="form-group">
                 <input
+                  v-model="currentUser.username"
+                  required
                   class="form-control form-control-lg"
                   type="text"
                   placeholder="Your Name"
-                  v-model="getUse.username"
                 />
               </fieldset>
               <fieldset class="form-group">
                 <textarea
+                  v-model="currentUser.bio"
+                  required
                   class="form-control form-control-lg"
                   rows="8"
-                  v-model="getUse.bio"
                   placeholder="Short bio about you"
                 ></textarea>
               </fieldset>
               <fieldset class="form-group">
                 <input
+                  v-model="currentUser.email"
+                  required
                   class="form-control form-control-lg"
                   type="text"
                   placeholder="Email"
-                  v-model="getUse.email"
                 />
               </fieldset>
               <fieldset class="form-group">
                 <input
+                  v-model="currentUser.password"
+                  required
+                  minlength="8"
                   class="form-control form-control-lg"
                   type="password"
                   placeholder="Password"
-                  v-model="getUse.password"
                 />
               </fieldset>
-              <button class="btn btn-lg btn-primary pull-xs-right">Update Settings</button>
+              <button class="btn btn-lg btn-primary pull-xs-right" @click="onSubmit">Update Settings</button>
             </fieldset>
           </form>
         </div>
@@ -57,39 +62,36 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { setUsers } from '@/utils/api'
+import { updateUser } from '@/utils/api'
+import { mapState, mapMutations } from 'vuex'
 export default {
-  name: 'SettingsIndex',
-  middleware: 'authenticated',
+  name: 'Settings',
+  middleware: ['auth'],
+  data() {
+    return {
+      currentUser: {
+        email: '',
+        image: '',
+        username: '',
+        bio: '',
+        password: '',
+      },
+    }
+  },
   computed: {
     ...mapState(['user']),
-    getUse: {
-      get() {
-        return JSON.parse(JSON.stringify(this.user))
-      },
-      set() {},
-    },
+  },
+  mounted() {
+    Object.assign(this.currentUser, this.user)
   },
   methods: {
+    ...mapMutations(['setUser']),
     async onSubmit() {
       try {
-        let key = {
-          email: this.getUse.email,
-          username: this.getUse.username,
-          password: this.getUse.password,
-          image: this.getUse.image,
-          bio: this.getUse.bio,
-        }
-        const { data } = await setUsers({ user: key })
-        console.log(data)
-      } catch (error) {
-        console.log(error)
-      }
+        await updateUser(this.currentUser)
+        this.setUser(this.currentUser)
+      } catch (error) {}
     },
   },
 }
 </script>
-
-<style lang='scss' scoped>
-</style>

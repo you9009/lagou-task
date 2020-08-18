@@ -7,14 +7,10 @@
             <img :src="profile.image" class="user-img" />
             <h4>{{profile.username}}</h4>
             <p>{{profile.bio}}</p>
-            <button
-              class="btn btn-sm btn-outline-secondary action-btn"
-              :class="{'active':profile.following}"
-              @click="typeFollow(profile.following)"
-            >
+            <button class="btn btn-sm btn-outline-secondary action-btn">
               <i class="ion-plus-round"></i>
               &nbsp;
-              Follow {{profile.username}}
+              Follow Eric Simons
             </button>
           </div>
         </div>
@@ -85,26 +81,17 @@
 </template>
 
 <script>
-import { getProfiles, setFollow, deleteFollow } from '@/utils/api'
+import { getProfile } from '@/utils/api'
 export default {
-  name: 'profile',
+  name: 'Profile',
+  middleware: ['auth'],
   async asyncData({ params }) {
-    const { data } = await getProfiles(params.username)
+    const username = params.username
+    const { data } = await getProfile(username)
+    const { profile } = data
     return {
-      profile: data.profile,
+      profile,
     }
-  },
-  methods: {
-    typeFollow(type) {
-      if (type) {
-        deleteFollow(this.profile.username)
-        } else {
-        setFollow(this.profile.username)
-      }
-    },
   },
 }
 </script>
-
-<style lang='scss' scoped>
-</style>

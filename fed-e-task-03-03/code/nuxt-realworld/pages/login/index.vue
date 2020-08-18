@@ -3,47 +3,48 @@
     <div class="container page">
       <div class="row">
         <div class="col-md-6 offset-md-3 col-xs-12">
-          <h1 class="text-xs-center">Sign in</h1>
+          <h1 class="text-xs-center">{{isLogin ? 'Sign in':'Sign up'}}</h1>
           <p class="text-xs-center">
-            <a href>Need an account?</a>
+            <nuxt-link v-if="!isLogin" to="/login">Have an account?</nuxt-link>
+            <nuxt-link v-else to="/register">Need an account?</nuxt-link>
           </p>
 
           <ul class="error-messages">
-            <li v-for="(item, index) in errMsg" :key="index">
-              <p v-for="(v, i) in item" :key="i">{{index}} {{v}}</p>
-            </li>
+            <template v-for="{messages,field} in errors">
+              <li v-for="(item,index) in messages" :key="index">{{field}} {{item}}</li>
+            </template>
           </ul>
 
           <form @submit.prevent="onSubmit">
             <fieldset class="form-group" v-if="!isLogin">
               <input
                 class="form-control form-control-lg"
+                v-model="user.username"
                 type="text"
                 placeholder="Your Name"
                 required
-                v-model="user.username"
               />
             </fieldset>
             <fieldset class="form-group">
               <input
                 class="form-control form-control-lg"
+                v-model="user.email"
                 type="email"
                 placeholder="Email"
                 required
-                v-model="user.email"
               />
             </fieldset>
             <fieldset class="form-group">
               <input
                 class="form-control form-control-lg"
+                v-model="user.password"
                 type="password"
                 placeholder="Password"
                 required
                 minlength="8"
-                v-model="user.password"
               />
             </fieldset>
-            <button class="btn btn-lg btn-primary pull-xs-right">{{isLogin?'Sign in':'Sign up'}}</button>
+            <button class="btn btn-lg btn-primary pull-xs-right">{{isLogin ? 'Sign in':'Sign up'}}</button>
           </form>
         </div>
       </div>
@@ -53,25 +54,22 @@
 
 <script>
 import { login, register } from '@/utils/api'
-
 const Cookie = process.client ? require('js-cookie') : undefined
-
 export default {
-  middleware: 'notAuthenticated',
-  name: 'LoginIndex',
+  name: 'Login',
   data() {
     return {
       user: {
         username: '',
-        email: 'you9009@foxmail.com',
-        password: 'ziyou85630',
+        email: '',
+        password: '',
       },
-      errMsg: {},
+      errors: {},
     }
   },
   computed: {
     isLogin() {
-      return this.$route.name == 'LoginIndex'
+      return this.$route.name === 'login'
     },
   },
   methods: {
@@ -84,17 +82,15 @@ export default {
           : await register({
               user: this.user,
             })
-
         this.$store.commit('setUser', data.user)
         Cookie.set('user', data.user)
         this.$router.push('/')
-      } catch (err) {
-        this.errMsg = err.response.data.errors
+      } catch (error) {
+        console.dir(error)
+        this.errors = error.response.data.errors
       }
     },
   },
+  middleware: ['not-auth'],
 }
 </script>
-
-<style lang='scss' scoped>
-</style>

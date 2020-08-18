@@ -16,43 +16,32 @@ export const register = (data) => {
   })
 }
 
-export const setUsers = (data) => {
+export const updateUser = (data) => {
   return request({
     method: 'PUT',
-    url: '/api/users',
-    data
+    url: '/api/user',
+    params: {
+      user: data
+    }
   })
 }
 
-export const setArticles = (data) => {
-  return request({
-    method: 'POST',
-    url: '/api/articles',
-    data
-  })
-}
-
-export const getProfiles = (params) => {
+// 获取文章列表
+export const getTags = () => {
   return request({
     method: 'GET',
-    url: '/api/profiles/'+params,
+    url: '/api/tags'
   })
 }
 
-export const setFollow = (data) => {
+export const getProfile = (username) => {
   return request({
-    method: 'POST',
-    url: '/api/profiles/' + data + '/follow'
+    method: 'GET',
+    url: `/api/profiles/${username}`
   })
 }
 
-export const deleteFollow = (data) => {
-  return request({
-    method: 'DELETE',
-    url: '/api/profiles/' + data + '/follow'
-  })
-}
-
+// 获取文章列表
 export const getArticles = (params) => {
   return request({
     method: 'GET',
@@ -61,9 +50,65 @@ export const getArticles = (params) => {
   })
 }
 
-export const getTags = () => {
+export const createArticles = (params) => {
+  return request({
+    method: 'POST',
+    url: '/api/articles',
+    params
+  })
+}
+
+export const getYourFeedArticles = (params) => {
   return request({
     method: 'GET',
-    url: '/api/tags'
+    url: '/api/articles/feed',
+    params
+  })
+}
+
+export const addFavorite = (slug) => {
+  return request({
+    method: 'POST',
+    url: `/api/articles/${slug}/favorite`
+  })
+}
+
+export const deleteFavorite = (slug) => {
+  return request({
+    method: 'DELETE',
+    url: `/api/articles/${slug}/favorite`
+  })
+}
+
+export const getArticle = (slug) => {
+  return request({
+    method: 'GET',
+    url: `/api/articles/${slug}`
+  })
+}
+
+export const getComments = (slug) => {
+  return request({
+    method: 'GET',
+    url: `/api/articles/${slug}/comments`
+  })
+}
+
+export const addComments = ({ slug, comment }) => {
+  return request({
+    method: 'POST',
+    url: `/api/articles/${slug}/comments`,
+    params: {
+      comment: {
+        body: comment
+      }
+    }
+  })
+}
+
+export const deleteComments = ({ slug, id }) => {
+  return request({
+    method: 'DELETE',
+    url: `/api/articles/${slug}/comments/${id}`
   })
 }
