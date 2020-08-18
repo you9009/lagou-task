@@ -1,4 +1,7 @@
 module.exports = {
+  server: {
+    port: 3456
+  },
   router: {
     linkActiveClass: 'active',
     extendRoutes(routes, resolve) {
