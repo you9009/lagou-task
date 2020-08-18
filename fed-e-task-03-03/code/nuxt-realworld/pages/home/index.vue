@@ -12,101 +12,64 @@
         <div class="col-md-9">
           <div class="feed-toggle">
             <ul class="nav nav-pills outline-active">
-              <li v-if="user" class="nav-item">
+              <li class="nav-item" v-if="user">
                 <nuxt-link
-                  exact
-                  class="nav-link"
                   :class="{ active: tab === 'your_feed' }"
-                  :to="{
-                    name: 'home',
-                    query: {
-                      tab: 'your_feed',
-                    },
-                  }"
+                  :to="{name: 'home',query: {tab: 'your_feed'}}"
+                  class="nav-link"
+                  exact
                 >Your Feed</nuxt-link>
               </li>
               <li class="nav-item">
                 <nuxt-link
-                  exact
-                  class="nav-link"
                   :class="{ active: tab === 'global_feed' }"
-                  :to="{
-                    name: 'home',
-                  }"
+                  :to="{name: 'home'}"
+                  class="nav-link"
+                  exact
                 >Global Feed</nuxt-link>
               </li>
-              <li v-if="tag" class="nav-item">
+              <li class="nav-item" v-if="tag">
                 <nuxt-link
-                  exact
-                  class="nav-link"
                   :class="{ active: tab === 'tag' }"
-                  :to="{
-                    name: 'home',
-                    query: {
-                      tab: 'tag',
-                      tag: tag,
-                    },
-                  }"
+                  :to="{name: 'home',query: {tab: 'tag',tag: tag}}"
+                  class="nav-link"
+                  exact
                 ># {{ tag }}</nuxt-link>
               </li>
             </ul>
           </div>
 
-          <div class="article-preview" v-for="article in articles" :key="article.slug">
+          <div :key="article.slug" class="article-preview" v-for="article in articles">
             <div class="article-meta">
-              <nuxt-link
-                :to="{
-                  name: 'profile',
-                  params: {
-                    username: article.author.username,
-                  },
-                }"
-              >
+              <nuxt-link :to="{name: 'profile',params: {username: article.author.username}}">
                 <img :src="article.author.image" />
               </nuxt-link>
               <div class="info">
                 <nuxt-link
+                  :to="{name: 'profile',params: {username: article.author.username}}"
                   class="author"
-                  :to="{
-                    name: 'profile',
-                    params: {
-                      username: article.author.username,
-                    },
-                  }"
                 >{{ article.author.username }}</nuxt-link>
-                <span class="date">
-                  {{
-                  article.createdAt | date('MMM DD, YYYY')
-                  }}
-                </span>
+                <span class="date">{{ article.createdAt | date("MMM DD, YYYY") }}</span>
               </div>
               <button
-                class="btn btn-outline-primary btn-sm pull-xs-right"
                 :class="{ active: article.favorited }"
-                @click="onFavorite(article)"
                 :disabled="article.loading"
+                @click="onFavorite(article)"
+                class="btn btn-outline-primary btn-sm pull-xs-right"
               >
                 <i class="ion-heart"></i>
                 {{ article.favoritesCount }}
               </button>
             </div>
-            <nuxt-link
-              :to="{
-                name: 'article',
-                params: {
-                  slug: article.slug,
-                },
-              }"
-              class="preview-link"
-            >
+            <nuxt-link :to="{name: 'article',params: {slug: article.slug}}" class="preview-link">
               <h1>{{ article.title }}</h1>
               <p>{{ article.description }}</p>
               <span>Read more...</span>
               <ul class="tag-list">
                 <li
+                  :key="tag"
                   class="tag-default tag-pill tag-outline"
                   v-for="tag in article.tagList"
-                  :key="tag"
                 >{{ tag }}</li>
               </ul>
             </nuxt-link>
@@ -115,21 +78,14 @@
           <nav>
             <ul class="pagination">
               <li
-                class="page-item"
                 :class="{ active: item === page }"
-                v-for="item in totalPage"
                 :key="item"
+                class="page-item"
+                v-for="item in totalPage"
               >
                 <nuxt-link
+                  :to="{name: 'home',query: {page: item,tag: $route.query.tag,tab: tab}}"
                   class="page-link"
-                  :to="{
-                    name: 'home',
-                    query: {
-                      page: item,
-                      tag: $route.query.tag,
-                      tab: tab,
-                    },
-                  }"
                 >{{ item }}</nuxt-link>
               </li>
             </ul>
@@ -141,16 +97,10 @@
             <p>Popular Tags</p>
             <div class="tag-list">
               <nuxt-link
-                :to="{
-                  name: 'home',
-                  query: {
-                    tag: item,
-                    tab: 'tag',
-                  },
-                }"
+                :key="item"
+                :to="{name: 'home',query: {tag: item,tab: 'tag'}}"
                 class="tag-pill tag-default"
                 v-for="item in tags"
-                :key="item"
               >{{ item }}</nuxt-link>
             </div>
           </div>
@@ -171,7 +121,10 @@ export default {
     const tab = query.tab || 'global_feed'
     const tag = query.tag
     const loadArticles = tab === 'global_feed' ? getArticles : getYourFeedArticles
-    const [articleRes, tagRes] = await Promise.all([loadArticles({ limit, offset: (page - 1) * limit, tag }), getTags()])
+    const [articleRes, tagRes] = await Promise.all([
+      loadArticles({ limit, offset: (page - 1) * limit, tag }),
+      getTags()
+    ])
     const { articles, articlesCount } = articleRes.data
     const { tags } = tagRes.data
     articles.forEach((article) => {
@@ -184,7 +137,7 @@ export default {
       limit,
       page,
       tab,
-      tag,
+      tag
     }
   },
   watchQuery: ['page', 'tag', 'tab'],
@@ -192,7 +145,7 @@ export default {
     ...mapState(['user']),
     totalPage() {
       return Math.ceil(this.articlesCount / this.limit)
-    },
+    }
   },
   methods: {
     async onFavorite(article) {
@@ -218,7 +171,7 @@ export default {
         }
       }
       article.loading = false
-    },
-  },
+    }
+  }
 }
 </script>

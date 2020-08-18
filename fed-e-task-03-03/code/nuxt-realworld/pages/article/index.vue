@@ -15,8 +15,8 @@
             <span class="date">{{article.createAt | date('MMM DD, YYYY')}}</span>
           </div>
           <button
-            class="btn btn-sm btn-outline-secondary"
             :class="{active: article.author.following}"
+            class="btn btn-sm btn-outline-secondary"
           >
             <i class="ion-plus-round"></i>
             &nbsp; Follow Eric Simons
@@ -24,8 +24,8 @@
           </button>
           &nbsp;&nbsp;
           <button
-            class="btn btn-sm btn-outline-primary"
             :class="{active: article.favorited}"
+            class="btn btn-sm btn-outline-primary"
           >
             <i class="ion-heart"></i>
             &nbsp; Favorite Post
@@ -54,8 +54,8 @@
             <span class="date">{{article.createAt | date('MMM DD, YYYY')}}</span>
           </div>
           <button
-            class="btn btn-sm btn-outline-secondary"
             :class="{active: article.author.following}"
+            class="btn btn-sm btn-outline-secondary"
           >
             <i class="ion-plus-round"></i>
             &nbsp; Follow Eric Simons
@@ -63,8 +63,8 @@
           </button>
           &nbsp;&nbsp;
           <button
-            class="btn btn-sm btn-outline-primary"
             :class="{active: article.favorited}"
+            class="btn btn-sm btn-outline-primary"
           >
             <i class="ion-heart"></i>
             &nbsp; Favorite Post
@@ -78,19 +78,19 @@
           <form class="card comment-form">
             <div class="card-block">
               <textarea
-                v-model="comment"
                 class="form-control"
                 placeholder="Write a comment..."
                 rows="3"
+                v-model="comment"
               ></textarea>
             </div>
             <div class="card-footer">
               <img :src="user.image" class="comment-author-img" />
-              <button class="btn btn-sm btn-primary" @click="addComment">Post Comment</button>
+              <button @click="addComment" class="btn btn-sm btn-primary">Post Comment</button>
             </div>
           </form>
 
-          <div class="card" v-for="comment in comments" :key="comment.id">
+          <div :key="comment.id" class="card" v-for="comment in comments">
             <div class="card-block">
               <p class="card-text">{{comment.body}}</p>
             </div>
@@ -121,11 +121,11 @@ export default {
   data() {
     return {
       comments: [],
-      comment: '',
+      comment: ''
     }
   },
   computed: {
-    ...mapState(['user']),
+    ...mapState(['user'])
   },
   mounted() {
     this.getComments()
@@ -136,7 +136,7 @@ export default {
     const md = new MarkdownIt()
     article.body = md.render(article.body)
     return {
-      article: data.article,
+      article: data.article
     }
   },
   head() {
@@ -146,9 +146,9 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: this.article.description,
-        },
-      ],
+          content: this.article.description
+        }
+      ]
     }
   },
   methods: {
@@ -160,7 +160,7 @@ export default {
       try {
         const { data } = await addComments({
           slug: this.article.slug,
-          comment: this.comment,
+          comment: this.comment
         })
         console.log(data)
         debugger
@@ -174,8 +174,8 @@ export default {
       } catch (error) {
         console.dir(error)
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

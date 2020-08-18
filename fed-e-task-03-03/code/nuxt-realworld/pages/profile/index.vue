@@ -37,14 +37,14 @@
                 <img src="http://i.imgur.com/Qr71crq.jpg" />
               </a>
               <div class="info">
-                <a href class="author">Eric Simons</a>
+                <a class="author" href>Eric Simons</a>
                 <span class="date">January 20th</span>
               </div>
               <button class="btn btn-outline-primary btn-sm pull-xs-right">
                 <i class="ion-heart"></i> 29
               </button>
             </div>
-            <a href class="preview-link">
+            <a class="preview-link" href>
               <h1>How to build webapps that scale</h1>
               <p>This is the description for the post.</p>
               <span>Read more...</span>
@@ -57,14 +57,14 @@
                 <img src="http://i.imgur.com/N4VcUeJ.jpg" />
               </a>
               <div class="info">
-                <a href class="author">Albert Pai</a>
+                <a class="author" href>Albert Pai</a>
                 <span class="date">January 20th</span>
               </div>
               <button class="btn btn-outline-primary btn-sm pull-xs-right">
                 <i class="ion-heart"></i> 32
               </button>
             </div>
-            <a href class="preview-link">
+            <a class="preview-link" href>
               <h1>The song you won't ever stop singing. No matter how hard you try.</h1>
               <p>This is the description for the post.</p>
               <span>Read more...</span>
@@ -90,8 +90,8 @@ export default {
     const { data } = await getProfile(username)
     const { profile } = data
     return {
-      profile,
+      profile
     }
-  },
+  }
 }
 </script>

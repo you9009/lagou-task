@@ -9,50 +9,50 @@
             <fieldset>
               <fieldset class="form-group">
                 <input
-                  v-model="currentUser.image"
                   class="form-control"
-                  type="text"
                   placeholder="URL of profile picture"
+                  type="text"
+                  v-model="currentUser.image"
                 />
               </fieldset>
               <fieldset class="form-group">
                 <input
-                  v-model="currentUser.username"
-                  required
                   class="form-control form-control-lg"
-                  type="text"
                   placeholder="Your Name"
+                  required
+                  type="text"
+                  v-model="currentUser.username"
                 />
               </fieldset>
               <fieldset class="form-group">
                 <textarea
-                  v-model="currentUser.bio"
-                  required
                   class="form-control form-control-lg"
-                  rows="8"
                   placeholder="Short bio about you"
+                  required
+                  rows="8"
+                  v-model="currentUser.bio"
                 ></textarea>
               </fieldset>
               <fieldset class="form-group">
                 <input
-                  v-model="currentUser.email"
-                  required
                   class="form-control form-control-lg"
-                  type="text"
                   placeholder="Email"
+                  required
+                  type="text"
+                  v-model="currentUser.email"
                 />
               </fieldset>
               <fieldset class="form-group">
                 <input
-                  v-model="currentUser.password"
-                  required
-                  minlength="8"
                   class="form-control form-control-lg"
-                  type="password"
+                  minlength="8"
                   placeholder="Password"
+                  required
+                  type="password"
+                  v-model="currentUser.password"
                 />
               </fieldset>
-              <button class="btn btn-lg btn-primary pull-xs-right" @click="onSubmit">Update Settings</button>
+              <button @click="onSubmit" class="btn btn-lg btn-primary pull-xs-right">Update Settings</button>
             </fieldset>
           </form>
         </div>
@@ -74,12 +74,12 @@ export default {
         image: '',
         username: '',
         bio: '',
-        password: '',
-      },
+        password: ''
+      }
     }
   },
   computed: {
-    ...mapState(['user']),
+    ...mapState(['user'])
   },
   mounted() {
     Object.assign(this.currentUser, this.user)
@@ -91,7 +91,7 @@ export default {
         await updateUser(this.currentUser)
         this.setUser(this.currentUser)
       } catch (error) {}
-    },
-  },
+    }
+  }
 }
 </script>

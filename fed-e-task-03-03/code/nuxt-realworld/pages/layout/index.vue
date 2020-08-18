@@ -6,7 +6,7 @@
         <nuxt-link class="navbar-brand" to="/">Nuxt</nuxt-link>
         <ul class="nav navbar-nav pull-xs-right">
           <li class="nav-item">
-            <nuxt-link class="nav-link" to="/" exact>Home</nuxt-link>
+            <nuxt-link class="nav-link" exact to="/">Home</nuxt-link>
           </li>
           <template v-if="user">
             <li class="nav-item">
@@ -20,8 +20,9 @@
               </nuxt-link>
             </li>
             <li class="nav-item">
-              <nuxt-link class="nav-link" :to="'/profile/'+user.username">
-                <img v-if="user.image" :src="user.image" alt />{{user.username}}
+              <nuxt-link :to="'/profile/'+user.username" class="nav-link">
+                <img :src="user.image" alt v-if="user.image" />
+                {{user.username}}
               </nuxt-link>
             </li>
           </template>
@@ -43,7 +44,7 @@
     <!-- 底部 -->
     <footer>
       <div class="container">
-        <nuxt-link to="/" class="logo-font">conduit</nuxt-link>
+        <nuxt-link class="logo-font" to="/">conduit</nuxt-link>
         <span class="attribution">
           An interactive learning project from
           <nuxt-link to="https://thinkster.io">Thinkster</nuxt-link>. Code &amp; design licensed under MIT.
@@ -58,8 +59,8 @@ import { mapState } from 'vuex'
 export default {
   name: 'layoutIndex',
   computed: {
-    ...mapState(['user']),
+    ...mapState(['user'])
   },
-  created() {},
+  created() {}
 }
 </script>

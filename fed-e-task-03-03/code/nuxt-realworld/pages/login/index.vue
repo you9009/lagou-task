@@ -5,13 +5,13 @@
         <div class="col-md-6 offset-md-3 col-xs-12">
           <h1 class="text-xs-center">{{isLogin ? 'Sign in':'Sign up'}}</h1>
           <p class="text-xs-center">
-            <nuxt-link v-if="!isLogin" to="/login">Have an account?</nuxt-link>
-            <nuxt-link v-else to="/register">Need an account?</nuxt-link>
+            <nuxt-link to="/login" v-if="!isLogin">Have an account?</nuxt-link>
+            <nuxt-link to="/register" v-else>Need an account?</nuxt-link>
           </p>
 
           <ul class="error-messages">
             <template v-for="{messages,field} in errors">
-              <li v-for="(item,index) in messages" :key="index">{{field}} {{item}}</li>
+              <li :key="index" v-for="(item,index) in messages">{{field}} {{item}}</li>
             </template>
           </ul>
 
@@ -19,29 +19,29 @@
             <fieldset class="form-group" v-if="!isLogin">
               <input
                 class="form-control form-control-lg"
-                v-model="user.username"
-                type="text"
                 placeholder="Your Name"
                 required
+                type="text"
+                v-model="user.username"
               />
             </fieldset>
             <fieldset class="form-group">
               <input
                 class="form-control form-control-lg"
-                v-model="user.email"
-                type="email"
                 placeholder="Email"
                 required
+                type="email"
+                v-model="user.email"
               />
             </fieldset>
             <fieldset class="form-group">
               <input
                 class="form-control form-control-lg"
-                v-model="user.password"
-                type="password"
+                minlength="8"
                 placeholder="Password"
                 required
-                minlength="8"
+                type="password"
+                v-model="user.password"
               />
             </fieldset>
             <button class="btn btn-lg btn-primary pull-xs-right">{{isLogin ? 'Sign in':'Sign up'}}</button>
@@ -62,25 +62,25 @@ export default {
       user: {
         username: '',
         email: '',
-        password: '',
+        password: ''
       },
-      errors: {},
+      errors: {}
     }
   },
   computed: {
     isLogin() {
       return this.$route.name === 'login'
-    },
+    }
   },
   methods: {
     async onSubmit() {
       try {
         const { data } = this.isLogin
           ? await login({
-              user: this.user,
+              user: this.user
             })
           : await register({
-              user: this.user,
+              user: this.user
             })
         this.$store.commit('setUser', data.user)
         Cookie.set('user', data.user)
@@ -89,8 +89,8 @@ export default {
         console.dir(error)
         this.errors = error.response.data.errors
       }
-    },
+    }
   },
-  middleware: ['not-auth'],
+  middleware: ['not-auth']
 }
 </script>

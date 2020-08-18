@@ -7,47 +7,47 @@
             <fieldset>
               <fieldset class="form-group">
                 <input
-                  type="text"
-                  v-model="article.title"
                   class="form-control form-control-lg"
                   placeholder="Article Title"
+                  type="text"
+                  v-model="article.title"
                 />
               </fieldset>
               <fieldset class="form-group">
                 <input
-                  type="text"
-                  v-model="article.description"
                   class="form-control"
                   placeholder="What's this article about?"
+                  type="text"
+                  v-model="article.description"
                 />
               </fieldset>
               <fieldset class="form-group">
                 <textarea
                   class="form-control"
-                  v-model="article.body"
-                  rows="8"
                   placeholder="Write your article (in markdown)"
+                  rows="8"
+                  v-model="article.body"
                 ></textarea>
               </fieldset>
               <fieldset class="form-group">
                 <input
-                  type="text"
-                  class="form-control"
-                  v-model="tag"
                   @keyup.enter="addTag"
+                  class="form-control"
                   placeholder="Enter tags"
+                  type="text"
+                  v-model="tag"
                 />
                 <div class="tag-list"></div>
                 <span
-                  v-for="(item,index) in article.tagList"
-                  style="margin:5px"
                   :key="item+index"
+                  style="margin:5px"
+                  v-for="(item,index) in article.tagList"
                 >{{item}}</span>
               </fieldset>
               <button
+                @click="onSubmit"
                 class="btn btn-lg pull-xs-right btn-primary"
                 type="button"
-                @click="onSubmit"
               >Publish Article</button>
             </fieldset>
           </form>
@@ -68,9 +68,9 @@ export default {
         title: '',
         description: '',
         body: '',
-        tagList: [],
+        tagList: []
       },
-      tag: '',
+      tag: ''
     }
   },
   methods: {
@@ -81,7 +81,7 @@ export default {
           title: '',
           description: '',
           body: '',
-          tagList: [],
+          tagList: []
         }
         this.$router.push('/')
       } catch (error) {}
@@ -91,7 +91,7 @@ export default {
         this.article.tagList.push(this.tag)
         this.tag = ''
       }
-    },
-  },
+    }
+  }
 }
 </script>
