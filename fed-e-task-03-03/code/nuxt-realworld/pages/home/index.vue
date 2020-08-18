@@ -2,7 +2,7 @@
   <div class="home-page">
     <div class="banner">
       <div class="container">
-        <h1 class="logo-font">conduit</h1>
+        <h1 class="logo-font">nuxt</h1>
         <p>A place to share your knowledge.</p>
       </div>
     </div>
@@ -164,7 +164,7 @@
 import { getArticles, getYourFeedArticles, addFavorite, deleteFavorite, getTags } from '@/utils/api'
 import { mapState } from 'vuex'
 export default {
-  name: 'HomeIndex',
+  name: 'home',
   async asyncData({ query }) {
     const page = Number.parseInt(query.page || 1)
     const limit = 10
