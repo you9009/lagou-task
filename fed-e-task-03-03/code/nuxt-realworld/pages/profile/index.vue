@@ -83,8 +83,7 @@
 <script>
 import { getProfile } from '@/utils/api'
 export default {
-  name: 'Profile',
-  middleware: ['auth'],
+  name: 'profile',
   async asyncData({ params }) {
     const username = params.username
     const { data } = await getProfile(username)

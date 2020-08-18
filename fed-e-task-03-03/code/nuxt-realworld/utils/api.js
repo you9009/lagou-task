@@ -1,5 +1,5 @@
-import request from '@/utils/request'
-
+import request from '@/plugins/request'
+// 登录
 export const login = (data) => {
   return request({
     method: 'POST',
@@ -7,7 +7,7 @@ export const login = (data) => {
     data
   })
 }
-
+// 注册
 export const register = (data) => {
   return request({
     method: 'POST',
@@ -15,14 +15,12 @@ export const register = (data) => {
     data
   })
 }
-
-export const updateUser = (data) => {
+// 更新设置
+export const updateUser = (params) => {
   return request({
     method: 'PUT',
     url: '/api/user',
-    params: {
-      user: data
-    }
+    params
   })
 }
 

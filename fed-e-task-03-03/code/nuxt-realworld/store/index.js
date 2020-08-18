@@ -2,7 +2,7 @@ const cookieparser = process.server ? require('cookieparser') : undefined
 
 export const state = () => {
   return {
-    user: process.client ? JSON.parse(cookieparser.get('user') || 'null') : null
+    user: null
   }
 }
 export const mutations = {

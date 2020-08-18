@@ -61,7 +61,6 @@
 import { createArticles } from '@/utils/api'
 export default {
   name: 'editor',
-  middleware: ['auth'],
   data() {
     return {
       article: {

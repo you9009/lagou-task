@@ -66,7 +66,6 @@ import { updateUser } from '@/utils/api'
 import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Settings',
-  middleware: ['auth'],
   data() {
     return {
       currentUser: {

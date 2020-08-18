@@ -31,7 +31,7 @@
               <li class="nav-item" v-if="tag">
                 <nuxt-link
                   :class="{ active: tab === 'tag' }"
-                  :to="{name: 'home',query: {tab: 'tag',tag: tag}}"
+                  :to="{name: 'home',query: {tab: 'tag',tag}}"
                   class="nav-link"
                   exact
                 ># {{ tag }}</nuxt-link>
@@ -120,11 +120,15 @@ export default {
     const limit = 10
     const tab = query.tab || 'global_feed'
     const tag = query.tag
-    const loadArticles = tab === 'global_feed' ? getArticles : getYourFeedArticles
-    const [articleRes, tagRes] = await Promise.all([
-      loadArticles({ limit, offset: (page - 1) * limit, tag }),
-      getTags()
-    ])
+    const loadArticles =
+      tab === 'global_feed' ? getArticles : tab == 'tag' ? getArticles : getYourFeedArticles
+
+    const articleRes = await loadArticles({
+      limit,
+      offset: (page - 1) * limit,
+      tag
+    })
+    const tagRes = await getTags()
     const { articles, articlesCount } = articleRes.data
     const { tags } = tagRes.data
     articles.forEach((article) => {
