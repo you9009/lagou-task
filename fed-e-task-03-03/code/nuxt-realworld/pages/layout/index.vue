@@ -3,20 +3,20 @@
     <!-- 顶部导航栏 -->
     <nav class="navbar navbar-light">
       <div class="container">
-        <nuxt-link class="navbar-brand" to="/">Nuxt</nuxt-link>
+        <nuxt-link class="navbar-brand" to="/">You Nuxt Demo</nuxt-link>
         <ul class="nav navbar-nav pull-xs-right">
           <li class="nav-item">
-            <nuxt-link class="nav-link" exact to="/">Home</nuxt-link>
+            <nuxt-link class="nav-link" exact to="/">主页</nuxt-link>
           </li>
           <template v-if="user">
             <li class="nav-item">
               <nuxt-link class="nav-link" to="/editor">
-                <i class="ion-compose"></i>&nbsp;New Post
+                <i class="ion-compose"></i>&nbsp;创建
               </nuxt-link>
             </li>
             <li class="nav-item">
               <nuxt-link class="nav-link" to="/settings">
-                <i class="ion-gear-a"></i>&nbsp;Settings
+                <i class="ion-gear-a"></i>&nbsp;设置
               </nuxt-link>
             </li>
             <li class="nav-item">
@@ -28,10 +28,10 @@
           </template>
           <template v-else>
             <li class="nav-item">
-              <nuxt-link class="nav-link" to="/login">Sign in</nuxt-link>
+              <nuxt-link class="nav-link" to="/login">登录</nuxt-link>
             </li>
             <li class="nav-item">
-              <nuxt-link class="nav-link" to="/register">Sign up</nuxt-link>
+              <nuxt-link class="nav-link" to="/register">注册</nuxt-link>
             </li>
           </template>
         </ul>
@@ -44,7 +44,7 @@
     <!-- 底部 -->
     <footer>
       <div class="container">
-        <nuxt-link class="logo-font" to="/">conduit</nuxt-link>
+        <nuxt-link class="logo-font" to="/">You Nuxt Demo</nuxt-link>
         <span class="attribution">
           An interactive learning project from
           <nuxt-link to="https://thinkster.io">Thinkster</nuxt-link>. Code &amp; design licensed under MIT.
@@ -60,7 +60,6 @@ export default {
   name: 'layout',
   computed: {
     ...mapState(['user'])
-  },
-  created() {}
+  }
 }
 </script>

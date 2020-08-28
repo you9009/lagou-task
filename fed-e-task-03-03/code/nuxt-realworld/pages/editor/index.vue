@@ -3,51 +3,54 @@
     <div class="container page">
       <div class="row">
         <div class="col-md-10 offset-md-1 col-xs-12">
-          <form @submit.prevent="onSubmit">
+          <form @submit.prevent="publish">
             <fieldset>
               <fieldset class="form-group">
                 <input
-                  class="form-control form-control-lg"
-                  placeholder="Article Title"
                   type="text"
+                  class="form-control"
                   v-model="article.title"
+                  placeholder="Article Title"
+                  required
                 />
               </fieldset>
               <fieldset class="form-group">
                 <input
-                  class="form-control"
-                  placeholder="What's this article about?"
                   type="text"
+                  class="form-control"
                   v-model="article.description"
+                  placeholder="What's this article about?"
+                  required
                 />
               </fieldset>
               <fieldset class="form-group">
                 <textarea
                   class="form-control"
-                  placeholder="Write your article (in markdown)"
                   rows="8"
                   v-model="article.body"
+                  placeholder="Write your article (in markdown)"
+                  required
                 ></textarea>
               </fieldset>
               <fieldset class="form-group">
-                <input
-                  @keyup.enter="addTag"
-                  class="form-control"
+                <el-select
+                  v-model="article.tagList"
+                  multiple
                   placeholder="Enter tags"
-                  type="text"
-                  v-model="tag"
-                />
-                <div class="tag-list"></div>
-                <span
-                  :key="item+index"
-                  style="margin:5px"
-                  v-for="(item,index) in article.tagList"
-                >{{item}}</span>
+                  class="form-control"
+                >
+                  <el-option
+                    v-for="tag in allTag"
+                    :key="tag"
+                    v-if="tag && tag.trim()"
+                    :value="tag"
+                    :label="tag"
+                  />
+                </el-select>
               </fieldset>
               <button
-                @click="onSubmit"
                 class="btn btn-lg pull-xs-right btn-primary"
-                type="button"
+                :disabled="disabled"
               >Publish Article</button>
             </fieldset>
           </form>
@@ -58,38 +61,65 @@
 </template>
 
 <script>
-import { createArticles } from '@/utils/api'
+import { publishArticle, getArticle, modifyArticle, getTags } from '@/store/api'
+import { mapState } from 'vuex'
+
 export default {
-  name: 'editor',
-  data() {
+  middleware: 'authenticated',
+  name: 'EditorIndex',
+  data () {
     return {
+      disabled: false,
+      slug: this.$route.query.slug,
+      allTag: [],
       article: {
         title: '',
         description: '',
         body: '',
         tagList: []
-      },
-      tag: ''
+      }
     }
   },
+  computed: {
+    ...mapState(['user'])
+  },
+  created () {
+    this.init()
+  },
   methods: {
-    async onSubmit() {
-      try {
-        await createArticles({ article: this.article })
-        this.article = {
-          title: '',
-          description: '',
-          body: '',
-          tagList: []
-        }
-        this.$router.push('/')
-      } catch (error) {}
-    },
-    addTag() {
-      if (this.tag) {
-        this.article.tagList.push(this.tag)
-        this.tag = ''
+    async publish () {
+      const { article } = this
+      this.disabled = true
+      if (this.slug) {
+        await modifyArticle(this.slug, { article })
+      } else {
+        const { data } = await publishArticle({ article })
+        this.slug = data.article.slug
       }
+      this.disabled = false
+      this.$router.replace({
+        path: '/article?slug=' + this.slug
+      })
+    },
+    init () {
+      if (this.slug) {
+        this.getDetail()
+      }
+      this.getTags()
+    },
+    async getTags () {
+      const {
+        data: { tags }
+      } = await getTags()
+      this.allTag = tags.reverse()
+    },
+    async getDetail () {
+      const { data } = await getArticle(this.slug)
+      const { article } = data
+      Object.keys(this.article).forEach((key) => {
+        this.article[key] = article[key]
+      })
+      console.log(data)
     }
   }
 }

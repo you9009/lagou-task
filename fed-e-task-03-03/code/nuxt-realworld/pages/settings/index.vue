@@ -5,56 +5,53 @@
         <div class="col-md-6 offset-md-3 col-xs-12">
           <h1 class="text-xs-center">Your Settings</h1>
 
-          <form @submit.prevent="onSubmit">
+          <form @submit.prevent="submit">
             <fieldset>
               <fieldset class="form-group">
                 <input
                   class="form-control"
-                  placeholder="URL of profile picture"
                   type="text"
-                  v-model="currentUser.image"
+                  v-model="form.image"
+                  placeholder="URL of profile picture"
                 />
               </fieldset>
               <fieldset class="form-group">
                 <input
                   class="form-control form-control-lg"
-                  placeholder="Your Name"
-                  required
+                  v-model="form.username"
                   type="text"
-                  v-model="currentUser.username"
+                  placeholder="Your Name"
                 />
               </fieldset>
               <fieldset class="form-group">
                 <textarea
                   class="form-control form-control-lg"
-                  placeholder="Short bio about you"
-                  required
+                  v-model="form.bio"
                   rows="8"
-                  v-model="currentUser.bio"
+                  placeholder="Short bio about you"
                 ></textarea>
               </fieldset>
               <fieldset class="form-group">
                 <input
                   class="form-control form-control-lg"
-                  placeholder="Email"
-                  required
+                  v-model="form.email"
                   type="text"
-                  v-model="currentUser.email"
+                  placeholder="Email"
                 />
               </fieldset>
               <fieldset class="form-group">
                 <input
                   class="form-control form-control-lg"
-                  minlength="8"
-                  placeholder="Password"
-                  required
+                  v-model="form.password"
                   type="password"
-                  v-model="currentUser.password"
+                  placeholder="Password"
+                  minlength="8"
                 />
               </fieldset>
-              <button @click="onSubmit" class="btn btn-lg btn-primary pull-xs-right">Update Settings</button>
+              <button class="btn btn-lg btn-primary pull-xs-right">Update Settings</button>
             </fieldset>
           </form>
+          <button class="btn btn-outline-danger" @click="logout()">Or click here to logout.</button>
         </div>
       </div>
     </div>
@@ -62,34 +59,57 @@
 </template>
 
 <script>
-import { updateUser } from '@/utils/api'
-import { mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
+import { update } from '@/store/api'
+const Cookie = process.client ? require('js-cookie') : undefined
+
 export default {
-  name: 'Settings',
-  data() {
-    return {
-      currentUser: {
-        email: '',
-        image: '',
-        username: '',
-        bio: '',
-        password: ''
-      }
-    }
-  },
+  middleware: 'authenticated',
+  name: 'SettingsIndex',
   computed: {
     ...mapState(['user'])
   },
-  mounted() {
-    Object.assign(this.currentUser, this.user)
+  data () {
+    return {
+      form: {
+        username: '',
+        password: '',
+        email: '',
+        image: '',
+        bio: ''
+      }
+    }
+  },
+  created () {
+    let keys = Object.keys(this.form)
+    keys.forEach((key) => {
+      this.form[key] = this.user[key]
+    })
   },
   methods: {
-    ...mapMutations(['setUser']),
-    async onSubmit() {
-      try {
-        await updateUser(this.currentUser)
-        this.setUser(this.currentUser)
-      } catch (error) {}
+    async submit () {
+      const { data } = await update({
+        user: this.form
+      })
+      this.$store.commit('setUser', data.user)
+
+      Cookie.set('user', data.user)
+      this.$router.replace(`/profile?username=${data.user.username}`)
+    },
+    async logout () {
+      await this.$confirm('确认退出登录吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '退出成功!'
+        })
+      })
+      this.$store.commit('setUser', null)
+      Cookie.remove('user')
+      this.$router.replace('/')
     }
   }
 }
